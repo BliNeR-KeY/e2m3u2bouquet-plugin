@@ -190,7 +190,8 @@ def get_safe_filename(filename, fallback=''):
 	if isinstance(name, six.text_type):
 		name = name.encode('utf-8')
 	name = unicodedata.normalize('NFKD', six.text_type(name, 'utf_8', errors='ignore')).encode('ASCII', 'ignore')
-	name = re.sub(b'[^a-z0-9-_]', b'', name.lower())
+	name = re.sub(b'[^a-z0-9-_]', b'', name.replace(b'&', b'and').replace(b'+', b'_plus').lower())
+
 	if not name:
 		name = fallback
 	return six.ensure_str(name)
